@@ -52,7 +52,30 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 
+
+
+
+
+function addData(chart, label, data) {
+    chart.data.labels.push(label);
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.push(data);
+    });
+    chart.update();
+}
+
+function removeData(chart) {
+    chart.data.labels.pop();
+    chart.data.datasets.forEach((dataset) => {
+        dataset.data.pop();
+    });
+    chart.update();
+}
+
+
+
 var year = 2020
+
 var year_stats = season_stats.filter(e => e.season === year)
 console.log(year_stats)
 
@@ -62,15 +85,15 @@ year_data = year_stats.map(e => {
         backgroundColor: get_team_colors(e.team)['color2'],
         borderColor: get_team_colors(e.team)['color1'],
         data: [{
-            x: e.win_loss_pct,
+            x: e.ortg,
             y: e.drtg,
-            r: 5
+            r: e.win_loss_pct *5
         }]
     }
 })
 
 
-new Chart(document.getElementById("bubble-chart"), {
+var chart = new Chart(document.getElementById("bubble-chart"), {
     type: 'bubble',
     data: {
       datasets: year_data
@@ -78,7 +101,7 @@ new Chart(document.getElementById("bubble-chart"), {
     options: {
       title: {
         display: true,
-        text: 'Winning % vs. Defensive Rating'
+        text: 'Offensive Rating vs. Defensive Rating vs. Winning %'
       }, scales: {
         yAxes: [{ 
           scaleLabel: {
@@ -89,13 +112,13 @@ new Chart(document.getElementById("bubble-chart"), {
         xAxes: [{ 
           scaleLabel: {
             display: true,
-            labelString: "Win/Loss Percent"
+            labelString: "Offensive Rating"
           }
         }]
       },
       legend: {
           display: true,
-          position: 'bottom'
+          position: 'left'
       }
     }
 });
