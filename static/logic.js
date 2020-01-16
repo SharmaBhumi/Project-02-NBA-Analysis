@@ -90,7 +90,7 @@ function updateChart(chart, year) {
 }
 
 
-var year = 2020
+var year = 2019
 
 
 var year_stats = season_stats.filter(e => e.season === year)
@@ -155,3 +155,59 @@ var chart = new Chart(document.getElementById("bubble-chart"), {
     }
 });
 
+var seasonSelect = d3.select("#season-select")
+
+function createOptions (sel, array) {
+  var options = sel.selectAll("option")
+   .data(array)
+   .enter()
+   .append("option");
+ 
+  options.text(function(d) {
+     return d;
+  })
+   .attr("value", function(d) {
+     return d;
+  });
+};
+
+createOptions(seasonSelect, champions.map(e => e.year));
+
+function buttonClick() {
+  var seasonValue = d3.select("#season-select").property("value");
+  console.log(seasonValue);
+}
+
+d3.select("#season-btn").on("click", buttonClick);
+
+
+// console.log(champions)
+
+var x1 = [];
+var x2 = [];
+for (var i = 1; i < 500; i++)
+{
+	k = Math.random();
+	x1.push(Math.random() + 1);
+	x2.push(Math.random() + 1.1);
+}
+var trace1 = {
+  x: x1,
+  type: "histogram",
+  opacity: 0.5,
+  marker: {
+     color: 'green',
+  },
+};
+var trace2 = {
+  x: x2,
+  type: "histogram",
+  opacity: 0.6,
+  marker: {
+     color: 'red',
+  },
+};
+
+var data = [trace1, trace2];
+var layout = {barmode: "overlay"};
+Plotly.newPlot('myDiv', data, layout);
