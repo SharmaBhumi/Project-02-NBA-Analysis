@@ -11,6 +11,8 @@
     var season_stats = {{ season_stats | tojson }};
   </script>
   <script type="text/javascript" src='static/team_colors.js'></script>
+  <!-- <script src="plotly-latest.min.js"></script> -->
+  <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 
 </head>
 
@@ -34,11 +36,17 @@
       </div>
     </div>
 
-    <button onclick="updateChart(chart, 1990)">Click me</button> 
+    <select name="city" id="season-select"></select>
+
+    <!-- <button onclick="updateChart(chart, 1990)">Show Stats</button>  -->
+    <button id="season-btn" type="button" class="btn btn-default">Show Stats</button>
+
 
     <div class='row'>
       <div id="stats-table"></div>
     </div>
+
+    <div id='myDiv'></div>
 
   </div>
 
