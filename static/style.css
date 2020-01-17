@@ -1,3 +1,44 @@
-canvas#bubble-chart{
+body {
+    background-color: #f9c852;
+    padding: 20px;
+}
+
+.title {
+    background-color: #dfbb85;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 15px;
+    padding-right: 5px;
+}
+
+.chart-container{
     background-color: #d3d3d3;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
+#year-select {
+    background-color: #cf5300;
+    padding-top: 5px;
+    padding-bottom: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+#champ-box {
+    background-color: #cf5300;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 5px;
+}
+
+#stat-box {
+    background-color: #981717;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 25px;
+    padding-right: 50px;
 }
