@@ -4,7 +4,7 @@ var team_colors = [{
     "color2": "#c1d32f"
 },{
     "team": "Boston Celtics",
-    "color": "#007a33",
+    "color1": "#007a33",
     "color2": "#ba9653"
 },{
     "team": "Brooklyn Nets",
@@ -14,6 +14,10 @@ var team_colors = [{
     "team": "Charlotte Hornets",
     "color1": "#1d1160",
     "color2": "#00788c"
+},{
+    "team": "Charlotte Bobcats",
+    "color1": "#00778b",
+    "color2": "#280071"
 },{
     "team": "Chicago Bulls",
     "color1": "#CE1141",
@@ -71,9 +75,21 @@ var team_colors = [{
     "color1": "#0c2340",
     "color2": "#236192"
 },{
+    "team": "New Jersey Nets",
+    "color1": "#ffffff",
+    "color2": "#000000",
+},{
     "team": "New Orleans Pelicans",
     "color1": "#0c2340",
     "color2": "#c8102e"
+},{
+    "team": "New Orleans Hornets",
+    "color1": "#c8102e",
+    "color2": "#0c2340"
+},{
+    "team": "New Orleans/Oklahoma City Hornets",
+    "color1": "#c8102e",
+    "color2": "#0c2340"
 },{
     "team": "New York Knicks",
     "color1": "#006bb6",
@@ -115,11 +131,19 @@ var team_colors = [{
     "color1": "#002b5c",
     "color2": "#00471b"
 },{
+    "team": "Vancouver Grizzlies",
+    "color1": "#00b2a9",
+    "color2": "#e43c40"
+},{
     "team": "Washington Wizards",
     "color1": "#002b5c",
     "color2": "#e31837"
 },{
-    "team": "Seattle Supersonics",
+    "team": "Washington Bullets",
+    "color1": "#e31837",
+    "color2": "#002b5c"
+},{
+    "team": "Seattle SuperSonics",
     "color1": "#00653a",
     "color2": "#ffc200"
 }]
