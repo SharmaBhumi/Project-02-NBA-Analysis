@@ -11,12 +11,22 @@ body {
     padding-right: 5px;
 }
 
-.chart-container{
+.container {
+    background-color: #cf5300;
+    padding: 1cm;
+}
+
+.chart-container {
     background-color: #d3d3d3;
     padding-top: 50px;
     padding-bottom: 50px;
     padding-left: 50px;
     padding-right: 50px;
+}
+
+#hist-box {
+    padding-top: 1cm;
+    padding-left: 50px;
 }
 
 #year-select {
@@ -41,4 +51,41 @@ body {
     padding-bottom: 20px;
     padding-left: 25px;
     padding-right: 50px;
+}
+
+.rangeslider{
+    width: 100%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    background: #dfbb85  ;
+    border-radius: 50px;
+    width: 100%;
+    height: 20px;
+    opacity: 2;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #cf5300;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #cf5300;
+    cursor: pointer;
 }
