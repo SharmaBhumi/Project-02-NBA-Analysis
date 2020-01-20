@@ -180,3 +180,42 @@ rangeslider.oninput = function() {
 } 
 
 yearUpdate(rangeslider.value)
+
+// initialize line chart for team 'Toronto Raptors'
+season_stats.forEach(function(d) {
+  d.ortg = +d.ortg.toFixed(2);
+  d.drtg = +d.drtg.toFixed(2);
+});
+
+var team ='Toronto Raptors';
+var team_stats = season_stats.filter(e => e.team === team);
+
+var team_data = {
+  labels: team_stats.map(e => e.season),
+  datasets: [{
+    data: team_stats.map(e => e.drtg),
+    label: "defense rating"
+  }, {
+    data: team_stats.map(e => e.ortg),
+    label: "offense rating"
+  }]
+}
+
+// console.log(team_data[0].data[0].x);
+
+
+
+var lineChart= new Chart(document.getElementById("line-chart"), {
+  type: 'line',
+  
+  data: team_data,
+  options: {
+    title: {
+      display: true,
+      text: 'Defensive Rating for ' + team,
+    }
+  }
+});
+
+
+console.log(lineChart)
