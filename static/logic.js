@@ -1,4 +1,7 @@
 
+// constants
+const resize = 0.5;
+
 //----- Helper functions -----
 
 // returns team colors from team_colors.js
@@ -66,8 +69,6 @@ function createTable() {
 // updates bubble chart with new year input
 function updateChart(year) {
   var year_stats = season_stats.filter(e => e.season == year);
-
-  var resize = 0.5;
   var year_data = year_stats.map(e => {
       return {
           label: [e.team],
@@ -83,57 +84,39 @@ function updateChart(year) {
   });
 
   bubbleChart.data.datasets = year_data;
-  var newTitle = 'Offensive Rating vs. Defensive Rating vs. Winning % for ' + year;
-  bubbleChart.options.title.text = newTitle;
+  bubbleChart.options.title.text = 'Offensive Rating vs. Defensive Rating vs. Winning % for ' + year;
 
   bubbleChart.update();
+
+  // display winner of championship
   d3.select("#winner").text(champions.filter(e => e.year==year)[0].team);
+}
+
+// updates histogram with new year input
+function updateHistogram(year) {
+  var test;
 }
 
 // update charts with new year input
 function yearUpdate(year) {
   updateChart(year);
+  // updateHistogram(year);
 }
 
-
-
-
-
-
-
-// initialize bubble chart with 2019 data
+// convert percentage
 season_stats.forEach(function(d) {
   d.win_loss_pct = +(d.win_loss_pct *100).toFixed(2)
 });
 
-var year = 2019;
-var year_stats = season_stats.filter(e => e.season === year);
-
-var resize = 0.5;
-var year_data = year_stats.map(e => {
-    return {
-        label: [e.team],
-        backgroundColor: get_team_colors(e.team)['color1'],
-        borderColor: get_team_colors(e.team)['color2'],
-        borderWidth: 2.5,
-        data: [{
-            x: e.ortg,
-            y: e.drtg,
-            r: e.win_loss_pct *resize
-        }]
-    }
-});
-
+// initialize bubble chart
 var bubbleChart = new Chart(document.getElementById("bubble-chart"), {
     type: 'bubble',
-    data: {
-      datasets: year_data
-    },
     options: {
       title: {
         display: true,
-        text: 'Offensive Rating vs. Defensive Rating vs. Winning % for ' + year,
         fontSize: 24
+      }, layout: {
+        padding: 50
       }, scales: {
         yAxes: [{ 
           scaleLabel: {
@@ -149,7 +132,8 @@ var bubbleChart = new Chart(document.getElementById("bubble-chart"), {
             fontSize: 16
           }
         }]
-      }, tooltips: {
+      }, 
+      tooltips: {
         callbacks : {
           label: function(t, d) {
             return d.datasets[t.datasetIndex].label;
@@ -165,47 +149,15 @@ var bubbleChart = new Chart(document.getElementById("bubble-chart"), {
             ];
           }
         }
-      }, legend: {
+      }, 
+      legend: {
           display: true,
           position: 'left'
       }
     }
 });
 
-// display 2019 winner of championship
-d3.select("#winner").text(champions.filter(e => e.year==2019)[0].team);
-
-
-
-// var x1 = [];
-// var x2 = [];
-// for (var i = 1; i < 500; i++) {
-// 	k = Math.random();
-// 	x1.push(Math.random() + 1);
-// 	x2.push(Math.random() + 1.1);
-// }
-// var trace1 = {
-//   x: x1,
-//   type: "histogram",
-//   opacity: 0.5,
-//   marker: {
-//      color: 'green',
-//   },
-// };
-// var trace2 = {
-//   x: x2,
-//   type: "histogram",
-//   opacity: 0.6,
-//   marker: {
-//      color: 'red',
-//   },
-// };
-
-// var data = [trace1, trace2];
-// var layout = {barmode: "overlay"};
-// Plotly.newPlot('myDiv', data, layout);
-
-
+// initialize histogram
 
 
 // population options list with season years
@@ -214,3 +166,17 @@ createOptions(seasonSelect, champions.map(e => e.year));
 
 // display data table
 createTable();
+
+
+// js for slider
+var rangeslider = document.getElementById("sliderRange"); 
+var output = document.getElementById("sliderValue"); 
+output.innerHTML = rangeslider.value; 
+  
+rangeslider.oninput = function() { 
+  yearInput = this.value;
+  output.innerHTML = yearInput;
+  yearUpdate(yearInput);
+} 
+
+yearUpdate(rangeslider.value)
