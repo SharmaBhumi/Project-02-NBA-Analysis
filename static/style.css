@@ -3,8 +3,8 @@ body {
     padding: 20px;
 }
 
-.title {
-    background-color: #dfbb85;
+.jumbotron {
+    background-color: #dfbb85!important;
     padding-top: 5px;
     padding-bottom: 5px;
     padding-left: 15px;
@@ -89,3 +89,20 @@ body {
     background: #cf5300;
     cursor: pointer;
 }
+
+@media screen and (max-width: 530px) {
+    .stateText {
+      display: none;
+    }
+  
+    .aText {
+      font-size: 14px;
+    }
+  }
+  
+  @media screen and (max-width: 400px) {
+    .aText {
+      font-size: 13px;
+    }
+  }
+  
