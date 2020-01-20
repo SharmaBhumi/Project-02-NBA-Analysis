@@ -17,7 +17,6 @@
 
 <body>
   <div class="container">
-
     <div class="row">
       <div class="col-xs-12 col-md-12">
         <div class="title">
@@ -37,13 +36,29 @@
           <h2>Champion:</h2>
           <h3 id="winner"></h3>
         </div>
-
       </div>
 
       <div class="row">        
         <canvas id="bubble-chart" width="800" height="800"></canvas>
       </div>
+
+      <hr>
+
+      <div class="row">
+        <div class = "col-12">
+          <div class="rangeslider">
+            <input type="range" min="1990" max="2019" value="2019" class="slider" id="sliderRange">
+            <p>Season: <span id="sliderValue"></span></p>   
+          </div>
+        </div>
+      </div>
+
     </div>
+
+    <div class="row" id="hist-box">
+      <div id="histogram"></div>
+    </div>
+
 
     <hr>
 
@@ -54,7 +69,6 @@
       </div>
     </div>
 
-    <div id='myDiv'></div>
 
   </div>
 
