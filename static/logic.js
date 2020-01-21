@@ -233,14 +233,19 @@ var team_data = {
   labels: team_stats.map(e => e.season),
   datasets: [{
     data: team_stats.map(e => e.drtg),
-    label: "defense rating"
+    label: "Defensive Rating",
+    borderColor: "#3e95cd",
+    fill: false
   }, {
     data: team_stats.map(e => e.ortg),
-    label: "offense rating"
+    label: "Offensive Rating",
+    borderColor: "#8e5ea2",
+    fill: false
   }]
 }
 
 // console.log(team_data[0].data[0].x);
+console.log(team_stats);
 
 
 
@@ -251,8 +256,25 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
   options: {
     title: {
       display: true,
-      text: 'Defensive Rating for ' + team,
+      text: 'Defensive Rating vs. Offensive Rating for ' +team ,
+      fontSize: 16
     }
+    ,
+    scales: {
+  //     yAxes: [{
+  //         ticks: {
+  //             beginAtZero: true
+  //         }
+  //     }]
+  xAxes: [{
+    ticks: {
+        autoSkip: false,
+        maxRotation: 90,
+        minRotation: 60
+    }
+}]
+  }
+    
   }
 });
 

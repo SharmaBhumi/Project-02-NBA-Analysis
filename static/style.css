@@ -24,6 +24,14 @@ body {
     padding-right: 50px;
 }
 
+.line-container {
+    background-color: #d3d3d3;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+
 #hist-box {
     padding-top: 1cm;
     padding-left: 50px;
