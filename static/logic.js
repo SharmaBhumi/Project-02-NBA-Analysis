@@ -94,13 +94,27 @@ function updateChart(year) {
 
 // updates histogram with new year input
 function updateHistogram(year) {
-  var test;
+  var year_stats = season_stats.filter(e => e.season == year);
+  var of_rtg = year_stats.map(e => e.ortg);
+  var df_rtg = year_stats.map(e => e.drtg);
+
+  var update = {
+    x: [of_rtg, df_rtg]
+  }
+
+  var layout_update = {
+    title: "Count of Teams by Defensive/Offensive Ratings in " + year,
+  };
+  var data_update;
+
+  Plotly.restyle('histogram', update, [0, 1]);
+  Plotly.update('histogram', data_update, layout_update, [0,1]);
 }
 
 // update charts with new year input
 function yearUpdate(year) {
   updateChart(year);
-  // updateHistogram(year);
+  updateHistogram(year);
 }
 
 // convert percentage
@@ -158,6 +172,31 @@ var bubbleChart = new Chart(document.getElementById("bubble-chart"), {
 });
 
 // initialize histogram
+
+var trace1 = {
+  type: "histogram",
+  name: "Offensive Rating",
+  opacity: 0.5,
+  marker: {
+     color: 'green',
+  },
+};
+var trace2 = {
+  type: "histogram",
+  name: "Defensive Rating",
+  opacity: 0.6,
+  marker: {
+     color: 'red',
+  },
+};
+var data = [trace1, trace2];
+var layout = {barmode: "overlay",
+  bargap: 0.01, 
+  bargroupgap: 0.0, 
+  xaxis: {title: "Rating"}, 
+  yaxis: {title: "Count"}  
+};
+Plotly.newPlot('histogram', data, layout);
 
 
 // population options list with season years
