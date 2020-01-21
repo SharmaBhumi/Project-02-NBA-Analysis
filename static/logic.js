@@ -6,6 +6,7 @@ const resize = 0.5;
 
 // returns team colors from team_colors.js
 function get_team_colors(team) {
+  // console.log(team_colors.filter(e =>e.team === team )[0]);
   return team_colors.filter(e =>e.team === team )[0];
 }
 
@@ -124,12 +125,12 @@ function updateLineChart(year){
     datasets: [{
       data: new_team_stats.map(e => e.drtg),
       label: "Defensive Rating",
-      borderColor: "#3e95cd",
+      borderColor: get_team_colors(team)['color1'],
       fill: false
     }, {
       data: new_team_stats.map(e => e.ortg),
       label: "Offensive Rating",
-      borderColor: "#8e5ea2",
+      borderColor: get_team_colors(team)['color2'],
       fill: false
     }]
   }
@@ -277,7 +278,7 @@ rangeslider.oninput = function() {
 
 yearUpdate(rangeslider.value)
 
-
+// initialize Line chart
 var team ='Toronto Raptors';
 var team_stats = season_stats.filter(e => e.team === team);
 
@@ -286,18 +287,16 @@ var team_data = {
   datasets: [{
     data: team_stats.map(e => e.drtg),
     label: "Defensive Rating",
-    borderColor: "#3e95cd",
+    borderColor: get_team_colors(team)['color1'],
     fill: false
   }, {
     data: team_stats.map(e => e.ortg),
     label: "Offensive Rating",
-    borderColor: "#8e5ea2",
+    borderColor: get_team_colors(team)['color2'],
     fill: false
   }]
 }
-
-
-
+// an instance of a line chart
 var lineChart= new Chart(document.getElementById("line-chart"), {
   type: 'line',
   
@@ -329,3 +328,21 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
 
 
 // console.log(lineChart)
+
+// populate the drop down list with team names for line chart
+var team_names=[];
+for(var i = 0; i < 20; i++) {
+  var team_name=team_colors[i].team
+  team_names.push(team_name );
+  console.log(team_colors[i].team);
+};
+console.log(team_names);
+
+var select = document.getElementById("selectTeam");
+// createOptions (sel, team_names);
+select.innerHTML = "";
+// Populate list with options:
+for(var i = 0; i < team_names.length; i++) {
+    var opt = team_names[i];
+    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+}
