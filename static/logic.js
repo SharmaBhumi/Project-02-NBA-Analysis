@@ -111,15 +111,72 @@ function updateHistogram(year) {
   Plotly.update('histogram', data_update, layout_update, [0,1]);
 }
 
+
+// update line chart with team for new year
+function updateLineChart(year){
+  var team=champions.filter(e => e.year==year)[0].team;
+  console.log(team);
+  
+  var new_team_stats = season_stats.filter(e => e.team === team);
+  console.log(new_team_stats);
+  var new_team_data = {
+    labels: new_team_stats.map(e => e.season),
+    datasets: [{
+      data: new_team_stats.map(e => e.drtg),
+      label: "Defensive Rating",
+      borderColor: "#3e95cd",
+      fill: false
+    }, {
+      data: new_team_stats.map(e => e.ortg),
+      label: "Offensive Rating",
+      borderColor: "#8e5ea2",
+      fill: false
+    }]
+  }
+  console.log(new_team_data);
+  new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    
+    data: new_team_data,
+    options: {
+      title: {
+        display: true,
+        text: 'Defensive Rating vs. Offensive Rating for ' +year+' Champion '+team ,
+        fontSize: 16
+      }
+      ,
+      scales: {
+    //     yAxes: [{
+    //         ticks: { 
+    //             beginAtZero: true
+    //         }
+    //     }]
+    xAxes: [{
+      ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 60
+      }
+  }]
+    }
+      
+    }
+  });
+  
+};
+
 // update charts with new year input
 function yearUpdate(year) {
   updateChart(year);
   updateHistogram(year);
+  updateLineChart(year);
 }
 
 // convert percentage
 season_stats.forEach(function(d) {
-  d.win_loss_pct = +(d.win_loss_pct *100).toFixed(2)
+  d.win_loss_pct = +(d.win_loss_pct *100).toFixed(2);
+  d.ortg = +d.ortg.toFixed(2);
+  d.drtg = +d.drtg.toFixed(2);
 });
 
 // initialize bubble chart
@@ -220,11 +277,6 @@ rangeslider.oninput = function() {
 
 yearUpdate(rangeslider.value)
 
-// initialize line chart for team 'Toronto Raptors'
-season_stats.forEach(function(d) {
-  d.ortg = +d.ortg.toFixed(2);
-  d.drtg = +d.drtg.toFixed(2);
-});
 
 var team ='Toronto Raptors';
 var team_stats = season_stats.filter(e => e.team === team);
@@ -244,9 +296,6 @@ var team_data = {
   }]
 }
 
-// console.log(team_data[0].data[0].x);
-console.log(team_stats);
-
 
 
 var lineChart= new Chart(document.getElementById("line-chart"), {
@@ -256,13 +305,13 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
   options: {
     title: {
       display: true,
-      text: 'Defensive Rating vs. Offensive Rating for ' +team ,
+      text: 'Defensive Rating vs. Offensive Rating for 2019 Champion ' +team ,
       fontSize: 16
     }
     ,
     scales: {
   //     yAxes: [{
-  //         ticks: {
+  //         ticks: { 
   //             beginAtZero: true
   //         }
   //     }]
@@ -279,4 +328,4 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
 });
 
 
-console.log(lineChart)
+// console.log(lineChart)
