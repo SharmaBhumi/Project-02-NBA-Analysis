@@ -116,8 +116,11 @@ function updateHistogram(year) {
 // update line chart with team for new year
 function updateLineChart(year){
   var team=champions.filter(e => e.year==year)[0].team;
-  console.log(team);
-  
+  // console.log(team);
+  updateLChart(team,year);
+};
+
+function updateLChart(team,year){
   var new_team_stats = season_stats.filter(e => e.team === team);
   console.log(new_team_stats);
   var new_team_data = {
@@ -125,12 +128,14 @@ function updateLineChart(year){
     datasets: [{
       data: new_team_stats.map(e => e.drtg),
       label: "Defensive Rating",
-      borderColor: get_team_colors(team)['color1'],
+      borderColor: "#007a33",
+      // get_team_colors(e.team)['color1'],
       fill: false
     }, {
       data: new_team_stats.map(e => e.ortg),
       label: "Offensive Rating",
-      borderColor: get_team_colors(team)['color2'],
+      borderColor: "#ba9653",
+      // get_team_colors(e.team)['color2'],
       fill: false
     }]
   }
@@ -163,7 +168,7 @@ function updateLineChart(year){
       
     }
   });
-  
+
 };
 
 // update charts with new year input
@@ -331,12 +336,12 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
 
 // populate the drop down list with team names for line chart
 var team_names=[];
-for(var i = 0; i < 20; i++) {
+for(var i = 0; i < 37; i++) {
   var team_name=team_colors[i].team
   team_names.push(team_name );
-  console.log(team_colors[i].team);
+  // console.log(team_colors[i].team);
 };
-console.log(team_names);
+// console.log(team_names);
 
 var select = document.getElementById("selectTeam");
 // createOptions (sel, team_names);
@@ -344,5 +349,18 @@ select.innerHTML = "";
 // Populate list with options:
 for(var i = 0; i < team_names.length; i++) {
     var opt = team_names[i];
-    select.innerHTML += "<option value=\"" + opt + "\">" + opt + "</option>";
+    // select.innerHTML += "<option value=\" " + opt + "\">" + opt + "</option>";
+    select.innerHTML += "<option value=\" " + " " + "\">"+ opt + "</option>";
 }
+
+
+
+// Function runs on chart type select update
+function updateChartType() {
+  // here we destroy/delete the old or previous chart and redraw it again
+  lineChart.destroy();
+  updated_team=toString(document.getElementById("selectTeam").value);
+  console.log(updated_team);
+  updateLChart(updated_team);
+  
+};
