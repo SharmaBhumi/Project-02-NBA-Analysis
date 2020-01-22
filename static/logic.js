@@ -113,14 +113,10 @@ function updateHistogram(year) {
 }
 
 
-// update line chart with team for new year
+// update line chart with champion team for the year selected
 function updateLineChart(year){
   var team=champions.filter(e => e.year==year)[0].team;
-  // console.log(team);
-  updateLChart(team,year);
-};
-
-function updateLChart(team,year){
+  // updateLChart(team,year);
   var new_team_stats = season_stats.filter(e => e.team === team);
   console.log(new_team_stats);
   var new_team_data = {
@@ -128,14 +124,12 @@ function updateLChart(team,year){
     datasets: [{
       data: new_team_stats.map(e => e.drtg),
       label: "Defensive Rating",
-      borderColor: "#007a33",
-      // get_team_colors(e.team)['color1'],
+      borderColor: get_team_colors(team)['color1'],
       fill: false
     }, {
       data: new_team_stats.map(e => e.ortg),
       label: "Offensive Rating",
-      borderColor: "#ba9653",
-      // get_team_colors(e.team)['color2'],
+      borderColor: get_team_colors(team)['color2'],
       fill: false
     }]
   }
@@ -148,6 +142,51 @@ function updateLChart(team,year){
       title: {
         display: true,
         text: 'Defensive Rating vs. Offensive Rating for ' +year+' Champion '+team ,
+        fontSize: 16
+      }
+      ,
+      scales: {
+      xAxes: [{
+      ticks: {
+          autoSkip: false,
+          maxRotation: 90,
+          minRotation: 60
+      }
+  }]
+    }
+      
+    }
+  });
+
+};
+
+// Update line chart for the selected team from the drop down list
+function updateLChart(team,year){
+  var new_team_stats = season_stats.filter(e => e.team === team);
+  console.log(new_team_stats);
+  var new_team_data = {
+    labels: new_team_stats.map(e => e.season),
+    datasets: [{
+      data: new_team_stats.map(e => e.drtg),
+      label: "Defensive Rating",
+      borderColor: "#007a33",
+      fill: false
+    }, {
+      data: new_team_stats.map(e => e.ortg),
+      label: "Offensive Rating",
+      borderColor: "#ba9653",
+      fill: false
+    }]
+  }
+  console.log(new_team_data);
+  new Chart(document.getElementById("line-chart"), {
+    type: 'line',
+    
+    data: new_team_data,
+    options: {
+      title: {
+        display: true,
+        text: 'Defensive Rating vs. Offensive Rating for ' +team ,
         fontSize: 16
       }
       ,
@@ -262,10 +301,6 @@ var layout = {barmode: "overlay",
 Plotly.newPlot('histogram', data, layout);
 
 
-// population options list with season years
-var seasonSelect = d3.select("#season-select");
-createOptions(seasonSelect, champions.map(e => e.year));
-
 // display data table
 createTable();
 
@@ -332,35 +367,14 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
 });
 
 
-// console.log(lineChart)
-
 // populate the drop down list with team names for line chart
-var team_names=[];
-for(var i = 0; i < 37; i++) {
-  var team_name=team_colors[i].team
-  team_names.push(team_name );
-  // console.log(team_colors[i].team);
-};
-// console.log(team_names);
-
-var select = document.getElementById("selectTeam");
-// createOptions (sel, team_names);
-select.innerHTML = "";
-// Populate list with options:
-for(var i = 0; i < team_names.length; i++) {
-    var opt = team_names[i];
-    // select.innerHTML += "<option value=\" " + opt + "\">" + opt + "</option>";
-    select.innerHTML += "<option value=\" " + " " + "\">"+ opt + "</option>";
-}
-
-
-
+var teamSelect = d3.select("#selectTeam");
+createOptions(teamSelect, team_colors.map(e => e.team));
 // Function runs on chart type select update
 function updateChartType() {
   // here we destroy/delete the old or previous chart and redraw it again
   lineChart.destroy();
-  updated_team=toString(document.getElementById("selectTeam").value);
+  updated_team = d3.select('#selectTeam').property('value');
   console.log(updated_team);
-  updateLChart(updated_team);
-  
+  updateLChart(updated_team);  
 };
