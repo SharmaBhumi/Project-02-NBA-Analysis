@@ -23,6 +23,8 @@ function createOptions (sel, array) {
    .attr("value", function(d) {
      return d;
   });
+  // display winner of championship in the drop down box
+document.getElementById('selectTeam').value = 'Toronto Raptors';
 }
 
 // creates table view of data 
@@ -116,9 +118,8 @@ function updateHistogram(year) {
 // update line chart with champion team for the year selected
 function updateLineChart(year){
   var team=champions.filter(e => e.year==year)[0].team;
-  // updateLChart(team,year);
-  var new_team_stats = season_stats.filter(e => e.team === team);
-  console.log(new_team_stats);
+  
+  // console.log(new_team_stats);
   var new_team_data = {
     labels: new_team_stats.map(e => e.season),
     datasets: [{
@@ -157,6 +158,8 @@ function updateLineChart(year){
       
     }
   });
+  // display winner of championship in the drop down box
+  document.getElementById('selectTeam').value = team;
 
 };
 
@@ -321,7 +324,8 @@ yearUpdate(rangeslider.value)
 // initialize Line chart
 var team ='Toronto Raptors';
 var team_stats = season_stats.filter(e => e.team === team);
-
+// display winner of championship in the drop down box
+document.getElementById('selectTeam').value = team;
 var team_data = {
   labels: team_stats.map(e => e.season),
   datasets: [{
@@ -367,13 +371,14 @@ var lineChart= new Chart(document.getElementById("line-chart"), {
 });
 
 
+
 // populate the drop down list with team names for line chart
 var teamSelect = d3.select("#selectTeam");
 createOptions(teamSelect, team_colors.map(e => e.team));
 // Function runs on chart type select update
 function updateChartType() {
   // here we destroy/delete the old or previous chart and redraw it again
-  lineChart.destroy();
+  // lineChart.destroy();
   updated_team = d3.select('#selectTeam').property('value');
   console.log(updated_team);
   updateLChart(updated_team);  
